@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "hiiit-org"
+  },
+  "targets": {
+    "fab-builder": {
+      "hosting": {
+        "hiiit-website": [
+          "hiiit-website"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

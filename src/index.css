@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* HIIIT Design System - Modern, Minimalistic, Elegant */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Core Colors - Calm, Professional Palette */
+    --background: 0 0% 100%;
+    --foreground: 240 6% 10%;
+    
+    /* Surface Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 10%;
+    --surface-subtle: 240 5% 96%;
+    --surface-muted: 240 5% 91%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 10%;
+    
+    /* Primary - Refined Purple */
+    --primary: 258 39% 59%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 258 39% 53%;
+    
+    /* Secondary - Soft Neutral */
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 23%;
+    
+    /* Muted - For Subtle Text */
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    
+    /* Accent */
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+    
+    /* States */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders & Inputs */
+    --border: 240 6% 90%;
+    --border-subtle: 240 6% 94%;
+    --input: 240 6% 90%;
+    --ring: 258 39% 59%;
+    
+    /* Radius - Subtle, Not Pill-Shaped */
+    --radius: 0.5rem;
+    --radius-sm: 0.375rem;
+    --radius-lg: 0.75rem;
+    
+    /* Shadows - Soft & Elegant */
+    --shadow-sm: 0 1px 2px 0 hsl(240 6% 10% / 0.03);
+    --shadow-md: 0 4px 6px -1px hsl(240 6% 10% / 0.05), 0 2px 4px -2px hsl(240 6% 10% / 0.03);
+    --shadow-lg: 0 10px 15px -3px hsl(240 6% 10% / 0.05), 0 4px 6px -4px hsl(240 6% 10% / 0.03);
+    --shadow-card: 0 1px 3px 0 hsl(240 6% 10% / 0.04), 0 1px 2px -1px hsl(240 6% 10% / 0.04);
+    
+    /* Spacing Scale */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 6% 10%;
+    --foreground: 0 0% 98%;
+    --card: 240 6% 13%;
+    --card-foreground: 0 0% 98%;
+    --surface-subtle: 240 6% 15%;
+    --surface-muted: 240 6% 20%;
+    --popover: 240 6% 13%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 258 39% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 258 39% 70%;
+    --secondary: 240 6% 18%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 6% 18%;
+    --muted-foreground: 240 4% 65%;
+    --accent: 240 6% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 20%;
+    --border-subtle: 240 6% 16%;
+    --input: 240 6% 20%;
+    --ring: 258 39% 65%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Typography - Clean, Low Contrast, Readable */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-medium;
+  }
+
+  h4 {
+    @apply text-lg font-medium;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  /* Section Spacing */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-padding-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Container */
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-6;
+  }
+
+  .container-wide {
+    @apply max-w-6xl mx-auto px-6;
+  }
+
+  /* Card Styles */
+  .card-elevated {
+    @apply bg-card rounded-lg border border-border-subtle shadow-card;
+  }
+
+  .card-flat {
+    @apply bg-surface-subtle rounded-lg;
+  }
+
+  /* Subtle Hover States */
+  .hover-lift {
+    @apply transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md;
+  }
+
+  .hover-subtle {
+    @apply transition-colors duration-150 ease-out;
+  }
+}
