@@ -5,6 +5,9 @@ import Footer from "@/components/Footer";
 import PersonaGrid from "@/components/PersonaGrid";
 import MethodologyWorkflow from "@/components/MethodologyWorkflow";
 import { HelpCircle, Workflow, Users, BookOpen, Play, X } from "lucide-react";
+import PricingCard from "@/components/pricing/PricingCard";
+import InteractivePricingCalculator from "@/components/pricing/InteractivePricingCalculator";
+import { pricingPlans } from "@/components/pricing/data/pricingData";
 
 interface Satellite {
   id: string;
@@ -31,16 +34,16 @@ const satellites: Satellite[] = [
     modalContent: (
       <div className="space-y-4 text-muted-foreground">
         <p>
-          Many organizations rely on external initiatives to create momentum — frameworks, 
-          programs, or expert-led transformations that generate activity while they are present. 
+          Many organizations rely on external initiatives to create momentum — frameworks,
+          programs, or expert-led transformations that generate activity while they are present.
           But when that presence disappears, the energy often fades with it.
         </p>
         <p>
-          Internal roles now exist that once belonged to consultants, yet what's often missing 
+          Internal roles now exist that once belonged to consultants, yet what's often missing
           is a shared structure and rhythm that keeps learning and progress moving forward.
         </p>
         <p>
-          HIIIT closes that gap. It provides a repeatable cycle of insight, reflection, and 
+          HIIIT closes that gap. It provides a repeatable cycle of insight, reflection, and
           action that helps teams align, learn, and adjust as conditions change.
         </p>
       </div>
@@ -119,6 +122,20 @@ const OrbitPrototype = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
 
+  const calculatorRef = useRef<HTMLDivElement>(null);
+  const [configuredPlan, setConfiguredPlan] = useState(pricingPlans[0]);
+
+  const handleConfigurePlan = (planId: string) => {
+    const plan = pricingPlans.find(p => p.id === planId);
+    if (!plan) return;
+    setConfiguredPlan(plan);
+    calculatorRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSignIn = () => {
+    console.log("Navigate to sign in");
+  };
+
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -166,7 +183,7 @@ const OrbitPrototype = () => {
       pricingSection?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    
+
     // For satellite sections, expand the card and scroll to it
     const satellite = satellites.find(s => s.id === sectionId);
     if (satellite) {
@@ -218,7 +235,7 @@ const OrbitPrototype = () => {
           <div className="absolute top-0 left-8 right-8 h-px bg-border-subtle" />
 
           {/* Satellite Cards - Always visible */}
-          <div 
+          <div
             id="cards-section"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-8 scroll-mt-20"
             style={{ animationDelay: "0.2s" }}
@@ -227,17 +244,14 @@ const OrbitPrototype = () => {
               const isHovered = hoveredCard === satellite.id;
               const isCardActive = activeCard === satellite.id;
               const isSelected = isCardActive || isHovered;
-              
+
               return (
-                <div 
-                  key={satellite.id} 
+                <div
+                  key={satellite.id}
                   className="relative"
                   data-card
                 >
-                  {/* Vertical connector to each card */}
                   <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 -top-8 w-px h-8 bg-border-subtle" />
-
-                  {/* Satellite Card - Compact, acts as tab */}
                   <div
                     onClick={() => handleCardClick(satellite.id)}
                     onMouseEnter={() => !activeCard && setHoveredCard(satellite.id)}
@@ -246,10 +260,10 @@ const OrbitPrototype = () => {
                       w-full h-full rounded-lg bg-card border text-left 
                       transition-all duration-300 ease-out animate-fade-in
                       overflow-hidden cursor-pointer flex flex-col
-                      ${isCardActive 
-                        ? 'border-primary shadow-lg ring-2 ring-primary/20' 
-                        : isHovered 
-                          ? 'border-primary/50 shadow-md -translate-y-1' 
+                      ${isCardActive
+                        ? 'border-primary shadow-lg ring-2 ring-primary/20'
+                        : isHovered
+                          ? 'border-primary/50 shadow-md -translate-y-1'
                           : 'border-border-subtle shadow-sm hover:shadow-card hover:border-border'
                       }
                     `}
@@ -258,22 +272,22 @@ const OrbitPrototype = () => {
                     {/* Visual Placeholder */}
                     <div className="relative bg-surface-subtle overflow-hidden h-24">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10" />
-                      <div 
+                      <div
                         className="absolute inset-0 opacity-30"
                         style={{
                           backgroundImage: `radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
                                            radial-gradient(circle at 80% 50%, hsl(var(--primary) / 0.08) 0%, transparent 50%)`,
                         }}
                       />
-                      
+
                       {satellite.visualType === "video" && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div 
+                          <div
                             className={`
                               w-12 h-12 rounded-full flex items-center justify-center
                               border shadow-sm transition-all duration-300
-                              ${isSelected 
-                                ? 'bg-primary border-primary' 
+                              ${isSelected
+                                ? 'bg-primary border-primary'
                                 : 'bg-background/90 border-border-subtle'
                               }
                             `}
@@ -323,7 +337,7 @@ const OrbitPrototype = () => {
 
           {/* Expanded Content Panel - Below cards */}
           {selectedSatellite && (
-            <div 
+            <div
               ref={panelRef}
               className="mt-8 rounded-lg bg-card border border-border-subtle shadow-lg overflow-hidden animate-fade-in relative"
             >
@@ -374,14 +388,14 @@ const OrbitPrototype = () => {
                 ) : (
                   <div className={`relative bg-surface-subtle overflow-hidden h-48 md:h-auto md:w-1/3 ${isActive ? 'md:min-h-[280px]' : 'md:min-h-[180px]'}`}>
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10" />
-                    <div 
+                    <div
                       className="absolute inset-0 opacity-30"
                       style={{
                         backgroundImage: `radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
                                          radial-gradient(circle at 80% 50%, hsl(var(--primary) / 0.08) 0%, transparent 50%)`,
                       }}
                     />
-                    
+
                     {selectedSatellite.visualType === "video" && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center border border-primary shadow-lg">
@@ -434,67 +448,81 @@ const OrbitPrototype = () => {
       </main>
 
       {/* Plans & Pricing Section */}
-      <section id="pricing" className="section-padding bg-surface-subtle scroll-mt-20">
+      <section id="pricing">
         <div className="container-wide">
-          <h2 className="text-foreground mb-6 text-center">Pricing & Plans</h2>
-          <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-            Choose the plan that fits your organization's needs
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Get started
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Choose the plan that fits your organization's needs
+            </p>
+          </div>
+
+          <div className="flex justify-center gap-6 flex-col md:flex-row max-w-5xl mx-auto">
+            <PricingCard
+              plan={pricingPlans[0]}
+              onSelectPlan={handleSignIn}
+              onConfigurePlan={() => handleConfigurePlan('corePlan')}
+              addOnInfo={{
+                teams: {
+                  price: 90,
+                  includes: "Includes 5 members per team",
+                  features: ["Compare teams"]
+                },
+                members: {
+                  price: 5,
+                  description: "5/monthly per member"
+                }
+              }}
+            />
+
+            <PricingCard
+              plan={pricingPlans[1]}
+              onSelectPlan={handleSignIn}
+              onConfigurePlan={() => handleConfigurePlan('fitnessCheck')}
+              addOnInfo={{
+                teams: {
+                  price: 50,
+                  includes: "Add teams to compare and customize recommendations 50 USD/team"
+                },
+                members: {
+                  price: 5,
+                  description: "Add respondants as needed. 5 USD/person"
+                }
+              }}
+            />
+          </div>
+        </div>
+      </section>
+      <div ref={calculatorRef} className="w-full">
+        <InteractivePricingCalculator configuredPlan={configuredPlan} />
+      </div>
+
+
+      <section className="py-20 w-full bg-primary/5">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            Ready to Start Building Organizational Fitness?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Join organizations that have transformed their effectiveness through regular practice.
+            Get visible results from day one.
           </p>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Starter Plan */}
-            <div className="p-8 rounded-lg bg-card border border-border-subtle hover:border-border hover:shadow-card transition-all duration-200">
-              <h3 className="text-xl font-medium text-foreground mb-2">Starter</h3>
-              <p className="text-muted-foreground text-sm mb-6">For teams getting started</p>
-              <div className="mb-6">
-                <span className="text-3xl font-semibold text-foreground">Free</span>
-              </div>
-              <ul className="space-y-3 text-sm text-muted-foreground mb-8">
-                <li>• Up to 10 team members</li>
-                <li>• 1 pulse survey per month</li>
-                <li>• Basic analytics</li>
-                <li>• Email support</li>
-              </ul>
-              <Button variant="outline" className="w-full">Get started</Button>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="p-8 rounded-lg bg-card border-2 border-primary shadow-lg relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
-                Most popular
-              </div>
-              <h3 className="text-xl font-medium text-foreground mb-2">Pro</h3>
-              <p className="text-muted-foreground text-sm mb-6">For growing organizations</p>
-              <div className="mb-6">
-                <span className="text-3xl font-semibold text-foreground">$49</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <ul className="space-y-3 text-sm text-muted-foreground mb-8">
-                <li>• Up to 50 team members</li>
-                <li>• Unlimited pulse surveys</li>
-                <li>• Advanced analytics</li>
-                <li>• Priority support</li>
-                <li>• Custom focus areas</li>
-              </ul>
-              <Button variant="hero" className="w-full">Start free trial</Button>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="p-8 rounded-lg bg-card border border-border-subtle hover:border-border hover:shadow-card transition-all duration-200">
-              <h3 className="text-xl font-medium text-foreground mb-2">Enterprise</h3>
-              <p className="text-muted-foreground text-sm mb-6">For large organizations</p>
-              <div className="mb-6">
-                <span className="text-3xl font-semibold text-foreground">Custom</span>
-              </div>
-              <ul className="space-y-3 text-sm text-muted-foreground mb-8">
-                <li>• Unlimited team members</li>
-                <li>• Unlimited everything</li>
-                <li>• Dedicated success manager</li>
-                <li>• SSO & advanced security</li>
-                <li>• Custom integrations</li>
-              </ul>
-              <Button variant="outline" className="w-full">Contact sales</Button>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Start Your Journey
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-input bg-background hover:bg-muted text-foreground"
+            >
+              Contact Sales
+            </Button>
           </div>
         </div>
       </section>
